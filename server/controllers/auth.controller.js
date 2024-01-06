@@ -24,7 +24,9 @@ export const signIn = async (req, res, next) => {
     if (dbUser) {
       const user = await bcryptjs.compare(password, dbUser.password);
       if (user) {
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+          expiresIn: "1hr",
+        });
         const { password: pass, ...rest } = dbUser._doc;
         res
           .cookie("access-token", token, { httpOnly: true })
