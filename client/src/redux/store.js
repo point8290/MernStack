@@ -1,26 +1,36 @@
-import { Iterable } from "immutable";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
-  configureStore,
-  createSerializableStateInvariantMiddleware,
-  isPlain,
-  Tuple,
-} from "@reduxjs/toolkit";
-
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import userReducer from "./user/userSlice";
+import storage from "redux-persist/lib/storage";
 
-const isSerializable = (value) => Iterable.isIterable(value) || isPlain(value);
+const persistConfig = {
+  key: "root",
+  storage,
+  version: 1,
+};
 
-const getEntries = (value) =>
-  Iterable.isIterable(value) ? value.entries() : Object.entries(value);
-
-const serializableMiddleware = createSerializableStateInvariantMiddleware({
-  isSerializable,
-  getEntries,
+const rootReducer = combineReducers({
+  user: userReducer,
 });
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    user: userReducer,
-  },
-  middleware: () => new Tuple(serializableMiddleware),
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
+export const persistor = persistStore(store);
