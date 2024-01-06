@@ -1,4 +1,5 @@
 import { useState } from "react";
+import OAuth from "../components/OAuth";
 import { Link, useNavigate } from "react-router-dom";
 function Signup() {
   console.log("Signup re-rendered");
@@ -77,8 +78,8 @@ function Signup() {
         >
           {loading ? "Signing up..." : "Sign up"}
         </button>
+        <OAuth />
       </form>
-
       <div className="flex gap-2 mt-5">
         <p>Have an account?</p>
         <Link to="/sign-in" className="">

@@ -6,6 +6,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 function Signin() {
   console.log("Signin re-rendered");
 
@@ -73,8 +74,8 @@ function Signin() {
         >
           {loading ? "Signing in..." : "Sign in"}
         </button>
+        <OAuth />
       </form>
-
       <div className="flex gap-2 mt-5">
         <p> Don&apos;t Have an account?</p>
         <Link to="/sign-up" className="">
