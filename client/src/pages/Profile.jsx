@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -131,7 +131,7 @@ function Profile() {
     }
   };
   return (
-    <div className="p-3 max-w-lg mx-auto">
+    <div className="p-2 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form className="flex flex-col" onSubmit={handleSubmit}>
         <input
@@ -169,7 +169,7 @@ function Profile() {
           id="username"
           name="username"
           placeholder="username"
-          className="border p-3 mt-3 rounded-lg"
+          className="border p-2 mt-3 rounded-lg"
           defaultValue={user.currentUser.username}
           onChange={onHandleChange}
         />
@@ -178,7 +178,7 @@ function Profile() {
           id="email"
           name="email"
           placeholder="email"
-          className="border p-3 mt-3 rounded-lg"
+          className="border p-2 mt-3 rounded-lg"
           onChange={onHandleChange}
           defaultValue={user.currentUser.email}
         />
@@ -188,16 +188,22 @@ function Profile() {
           name="password"
           placeholder="password"
           onChange={onHandleChange}
-          className="border p-3 mt-3 rounded-lg"
+          className="border p-2 mt-3 rounded-lg"
         />
         <button
           disabled={user.loading}
           className={`bg-slate-700 mt-3 rounded-lg ${
             user.loading ? "" : "uppercase"
-          } p-3 text-white hover:opacity-95 disabled:opacity-80`}
+          } p-2 text-white hover:opacity-95 disabled:opacity-80`}
         >
           {user.loading ? "Please wait..." : "Update"}
         </button>
+        <Link
+          to="/create-listing"
+          className="bg-green-700 uppercase text-white rounded-lg text-center p-2 mt-3 hover:opacity-95"
+        >
+          Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <span

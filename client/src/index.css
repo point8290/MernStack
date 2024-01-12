@@ -7,3 +7,6 @@ body{
     background-color: rgb(241,245,241);
     font-family: 'Roboto';
 }
+button{
+    font-size: small;
+}
