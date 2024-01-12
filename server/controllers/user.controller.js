@@ -35,3 +35,20 @@ export const updateUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteUser = async (req, res, next) => {
+  const id = req.params.id;
+  if (req.user.id != id) {
+    return errorHandler(401, "Unauthorized Request");
+  }
+
+  try {
+    await User.findByIdAndDelete(id);
+    res
+      .clearCookie("access-token")
+      .status(200)
+      .json({ message: "User has been deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
