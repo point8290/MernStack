@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { app } from "../firebase";
+import { useParams } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -8,7 +9,7 @@ import {
 } from "firebase/storage";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-function CreateListing() {
+function EditListing() {
   const [files, setFiles] = useState([]);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [imageUploadLoading, setImageUploadLoading] = useState(false);
@@ -16,6 +17,8 @@ function CreateListing() {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const params = useParams();
+
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -30,6 +33,21 @@ function CreateListing() {
     parking: false,
     furnished: false,
   });
+
+  useEffect(() => {
+    const getListing = async () => {
+      const listingId = params.id;
+
+      const res = await fetch(`/api/listing/${listingId}`);
+      const data = await res.json();
+      if (data.success == false) {
+        console.log("listing not found");
+        return;
+      }
+      setFormData(data);
+    };
+    getListing();
+  }, []);
 
   const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
@@ -138,7 +156,7 @@ function CreateListing() {
     }
     try {
       setLoading(true);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/edit/${params.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,10 +175,11 @@ function CreateListing() {
       setError(error?.message);
     }
   };
+
   return (
-    <main className="p-2 max-w-4xl mx-auto">
+    <main key={params.id} className="p-2 max-w-4xl mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">
-        Create a Listing
+        Update Listing
       </h1>
       <form
         className="flex flex-col py-2 sm:flex-row gap-4"
@@ -378,7 +397,7 @@ function CreateListing() {
               loading ? "" : "uppercase"
             } hover:opacity-95 disabled:opacity-80`}
           >
-            {loading ? "Creating..." : "Create Listing"}
+            {loading ? "Updating..." : "Update Listing"}
           </button>
           {error && <p className="text-red-700"> {error}</p>}
         </div>
@@ -387,4 +406,4 @@ function CreateListing() {
   );
 }
 
-export default CreateListing;
+export default EditListing;
