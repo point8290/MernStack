@@ -36,15 +36,18 @@ function EditListing() {
 
   useEffect(() => {
     const getListing = async () => {
-      const listingId = params.id;
-
-      const res = await fetch(`/api/listing/${listingId}`);
-      const data = await res.json();
-      if (data.success == false) {
-        console.log("listing not found");
-        return;
+      try {
+        const listingId = params.id;
+        const res = await fetch(`/api/listing/${listingId}`);
+        const data = await res.json();
+        if (data.success == false) {
+          console.log("listing not found");
+          return;
+        }
+        setFormData(data);
+      } catch (error) {
+        console.log("error", error);
       }
-      setFormData(data);
     };
     getListing();
   }, []);
