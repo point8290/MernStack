@@ -7,7 +7,7 @@ import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
-import { Listing } from "./pages/Listing";
+import Listing from "./pages/Listing";
 import EditListing from "./pages/EditListing";
 
 function App() {
