@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { app } from "../firebase";
 import {
@@ -40,9 +41,7 @@ function CreateListing() {
 
       uploadTask.on(
         "state_changed",
-        (snapshot) => {
-          console.log("snapshot", snapshot);
-        },
+        (snapshot) => {},
         (error) => {
           reject(error);
         },

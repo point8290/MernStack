@@ -2,8 +2,6 @@ import { useState } from "react";
 import OAuth from "../components/OAuth";
 import { Link, useNavigate } from "react-router-dom";
 function Signup() {
-  console.log("Signup re-rendered");
-
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,7 +27,6 @@ function Signup() {
       });
 
       const data = await resp.json();
-      console.log("data", data);
       setLoading(false);
       if (data.success == false) {
         setError(data.message);

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { app } from "../firebase";
 import { useParams } from "react-router-dom";
@@ -61,9 +62,7 @@ function EditListing() {
 
       uploadTask.on(
         "state_changed",
-        (snapshot) => {
-          console.log("snapshot", snapshot);
-        },
+        (snapshot) => {},
         (error) => {
           reject(error);
         },

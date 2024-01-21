@@ -44,7 +44,6 @@ function Home() {
     };
     fetchOfferListing();
   }, []);
-  console.log(offerListing);
   return (
     <div>
       <div className="flex flex-col gap-6 py-28 px-3 max-w-6xl mx-auto">
