@@ -11,7 +11,6 @@ function OAuth() {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
-      console.log(result);
       const dataObj = {
         email: result.user.email,
         name: result.user.displayName,
